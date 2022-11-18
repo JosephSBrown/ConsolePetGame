@@ -12,10 +12,13 @@ namespace PetGame
 
             while (loop)
             {
-                SoundPlayer player = new SoundPlayer("kawaiifuturebass.wav");
-                player.Load();
-                player.Play();
-                Thread.Sleep(12500);
+                if (!muted)
+                {
+                    SoundPlayer player = new SoundPlayer("kawaiifuturebass.wav");
+                    player.Load();
+                    player.Play();
+                    Thread.Sleep(12500);
+                }
             }
         }
     }
