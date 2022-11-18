@@ -6,7 +6,7 @@ namespace PetGame
 {
     class BackgroundProcesses
     {
-        public void BackgroundMusic()
+        public void BackgroundMusic(bool muted)
         {
             bool loop = true;
 

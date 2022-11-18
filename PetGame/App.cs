@@ -6,13 +6,14 @@ namespace PetGame
 {
     class App
     {
+        bool mute = false;
 
         public void Run()
         {
-            BackgroundProcesses bgp = new BackgroundProcesses();
+            //BackgroundProcesses bgp = new BackgroundProcesses();
 
-            Thread bgm = new Thread(new ThreadStart(bgp.BackgroundMusic));
-            bgm.Start();
+            //Thread bgm = new Thread(() => bgp.BackgroundMusic(mute));
+            //bgm.Start();
 
             titlemenu();
         }
@@ -128,7 +129,29 @@ namespace PetGame
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠳⢤⣤⣀⠀⠀⠀⠀⠀⠀⣋⣀⣙⣷⠦⠤⠤⠴⠶⠛⠁⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠲⠶⠖⠚⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ");
-            return;
+            string name = infoGet("Insert Your Pet's Name...");
+            string type = infoGet("Insert Your Pet Type...");
+
+            Pet pet = new Pet(name, type);
+
+            Console.WriteLine($"Here is your new pet, {pet.Name}, which is a {pet.PetType}");
+
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            switch (key.Key)
+            {
+                case ConsoleKey.Escape:
+                    titlemenu();
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private string infoGet(string info)
+        {
+            Console.Write(info);
+            return Console.ReadLine();
         }
 
         public void exit()
@@ -157,9 +180,24 @@ namespace PetGame
 
             var key = Console.ReadKey().Key;
 
+            bool space = false;
+
             switch (key)
             {
+                case ConsoleKey.Spacebar:
+                    if (!space)
+                    {
+                        mute = true;
+                        space = true;
+                    }
+                    else
+                    {
+                        mute = false;
+                        space = true;
+                    }
+                    return true;
                 case ConsoleKey.Escape:
+                    titlemenu();
                     return true;
                 default:
                     return true;
