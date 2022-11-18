@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 
 namespace PetGame
 {
-    interface IPet
+    internal interface IPet
     {
-
+        void DisplayPet();
     }
 }

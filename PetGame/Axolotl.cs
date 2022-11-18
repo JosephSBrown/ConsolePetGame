@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 
 namespace PetGame
 {
-    class Axolotl: Pet
+    class Axolotl : Pet
     {
-
         public string PetType = "Axolotl";
 
         public override void DisplayPet()

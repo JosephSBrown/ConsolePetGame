@@ -10,10 +10,10 @@ namespace PetGame
 
         public void Run()
         {
-            //BackgroundProcesses bgp = new BackgroundProcesses();
+            BackgroundProcesses bgp = new BackgroundProcesses();
 
-            //Thread bgm = new Thread(() => bgp.BackgroundMusic(mute));
-            //bgm.Start();
+            Thread bgm = new Thread(() => bgp.BackgroundMusic(mute));
+            bgm.Start();
 
             titlemenu();
         }
@@ -21,15 +21,20 @@ namespace PetGame
         public bool titlemenu()
         {
             string TitleGraphic = $@"
+                                   ____  __                                 ____       __ 
+                                  / __ \/ /_  ____________  __________     / __ \___  / /_
+                                 / / / / __ \/ ___/ ___/ / / / ___/ _ \   / /_/ / _ \/ __/
+                                / /_/ / /_/ (__  ) /__/ /_/ / /  /  __/  / ____/  __/ /_  
+                                \____/_.___/____/\___/\__,_/_/   \___/  /_/    \___/\__/  
 
-  _____     _      _____                      
- |  __ \   | |    / ____|                     
- | |__) |__| |_  | |  __  __ _ _ __ ___   ___ 
- |  ___/ _ \ __| | | |_ |/ _` | '_ ` _ \ / _ \
- | |  |  __/ |_  | |__| | (_| | | | | | |  __/
- |_|   \___|\__|  \_____|\__,_|_| |_| |_|\___|
-                                              
-                                              
+                                     _____ _                 __      __            
+                                    / ___/(_)___ ___  __  __/ /___ _/ /_____  _____
+                                    \__ \/ / __ `__ \/ / / / / __ `/ __/ __ \/ ___/
+                                   ___/ / / / / / / / /_/ / / /_/ / /_/ /_/ / /    
+                                  /____/_/_/ /_/ /_/\__,_/_/\__,_/\__/\____/_/     
+                                                 
+
+
 
 ";
 
@@ -100,7 +105,7 @@ namespace PetGame
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-                Console.WriteLine(o.option);
+                Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (o.option.Length / 2)) + "}", o.option));
             }
         }
 
@@ -129,15 +134,16 @@ namespace PetGame
             }
         }
 
-        private string infoGet(string info)
-        {
-            Console.Write(info);
-            return Console.ReadLine();
-        }
 
         public void exit()
         {
             Environment.Exit(0);
+        }
+
+        private string infoGet(string info)
+        {
+            Console.Write(info);
+            return Console.ReadLine();
         }
 
         public bool optionMenu()
@@ -146,16 +152,14 @@ namespace PetGame
 
             Console.Write(@"
 
-       ____  _____ _______ _____ ____  _   _  _____ 
-      / __ \|  __ \__   __|_   _/ __ \| \ | |/ ____|
-     | |  | | |__) | | |    | || |  | |  \| | (___  
-     | |  | |  ___/  | |    | || |  | | . ` |\___ \ 
-     | |__| | |      | |   _| || |__| | |\  |____) |
-      \____/|_|      |_|  |_____\____/|_| \_|_____/ 
-                                                
-                                                
+                                                 ____        __  _                 
+                                                / __ \____  / /_(_)___  ____  _____
+                                               / / / / __ \/ __/ / __ \/ __ \/ ___/
+                                              / /_/ / /_/ / /_/ / /_/ / / / (__  ) 
+                                              \____/ .___/\__/_/\____/_/ /_/____/  
+                                                  /_/                              
 
-");
+    ");
 
             Console.WriteLine("Press Escape to Return");
 
@@ -170,6 +174,7 @@ namespace PetGame
                     {
                         mute = true;
                         space = true;
+                        Console.Write("ahhhh");
                     }
                     else
                     {
@@ -186,5 +191,4 @@ namespace PetGame
 
         }
     }
-    
 }
