@@ -7,15 +7,18 @@ namespace PetGame
     class App
     {
 
-        public void titlemenu()
+        public void Run()
         {
-
-
             BackgroundProcesses bgp = new BackgroundProcesses();
 
             Thread bgm = new Thread(new ThreadStart(bgp.BackgroundMusic));
             bgm.Start();
 
+            titlemenu();
+        }
+
+        public bool titlemenu()
+        {
             string TitleGraphic = $@"
 
   _____     _      _____                      
@@ -32,9 +35,9 @@ namespace PetGame
             //Menu Options
             List<MenuOption> options = new List<MenuOption>()
             {
-                new MenuOption("New Game", () => Console.WriteLine("Billy")),
+                new MenuOption("New Game", () => Display()),
                 new MenuOption("Load Game", () => Console.WriteLine("Billy")),
-                new MenuOption("Options", () => Console.WriteLine("Billy")),
+                new MenuOption("Options", () => optionMenu()),
                 new MenuOption("Exit", () => exit()),
             };
 
@@ -71,7 +74,7 @@ namespace PetGame
             }
             while (key.Key != ConsoleKey.Escape);
 
-            return;
+            return true;
 
         }
 
@@ -100,11 +103,69 @@ namespace PetGame
             }
         }
 
+
+        public void Display()
+        {
+            Console.Clear();
+            Console.Write($@"
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠙⢦⠈⠀⠙⣆⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣀⣿⠀⠀⢸⠀⠀⢠⡇⠀⠳⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠘⣿⡀⠀⣼⠀⡴⠋⠻⡏⠀⠘⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣤⣤⣤⣤⣀⣸⣇⠀⢸⣷⠞⢷⣾⡅⠀⢠⡗⠀⡼⠛⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣤⡀⠀⣀⠀⠀⠀⠀⠀⣀⣴⠖⠋⠉⠁⠀⠀⠀⠀⠀⠀⠉⠛⢦⣿⡏⣷⣸⣿⠂⢀⣼⡷⠎⠀⢀⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢠⡞⠳⣄⡇⠀⢱⡄⠉⢷⡀⠀⣴⠞⠋⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⣿⣧⣾⣧⣄⣦⣾⢿⣳⣶⣺⣍⣀⣀⠀⣀⣀⠀⢀⠀⠀⠀
+⠀⠸⣇⠀⠘⣧⡀⠀⣧⠀⠀⣧⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣷⣄⠀⠀⠀⠹⠿⢿⣿⣟⣻⡾⠁⠀⣽⠋⠀⢸⠋⠁⠀⠀⠀⠀⠀⠂
+⢠⡶⠾⠧⣄⣈⣷⣷⣈⣷⣤⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣏⣻⣿⣄⠐⠖⣶⣿⣷⣿⡿⠁⢤⣾⠃⢀⡴⠿⢾⠉⠉⡿⠁⠀⡠⠂
+⠈⢧⡤⢤⣤⡖⠻⣯⡟⢿⣿⣲⣷⠀⠀⠀⢀⣤⣤⣤⠤⠾⠛⠀⠀⠀⠉⠅⠘⠀⠀⠀⠈⠙⣛⣿⣷⣾⡿⠿⠍⢁⣀⣠⠏⠀⡾⠁⠀⡄⠀⠀
+⠀⠘⣇⠀⠙⢷⡠⠾⣗⢸⣿⡿⢿⡆⠠⠴⠞⠷⠿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣉⠘⠙⢷⣄⠐⣾⠀⠀⠀⢰⠃⠀⠀⡁⠀⠀
+⠀⡤⠞⠳⠦⠈⣳⣄⣹⣾⣿⠻⠾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡞⣿⠳⢦⣄⣀⠀⢀⡾⠃⠙⡷⢶⠾⠉⠉⠁⠀⠀⠀⢸⡀⠀⠀⣇⠀⠀
+⠀⠳⣄⣀⣠⠼⠻⣯⡛⢻⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣧⡈⠇⠀⠈⠛⠛⠟⠓⠒⠺⢷⣤⡀⠀⠀⠀⠀⠀⠀⠈⣇⠀⠀⢸⠀⠀
+⠀⠀⢰⠎⠻⢦⣄⣈⣹⣿⣿⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠓⠒⠶⢤⡀⠀⠀⣿⠀⠀⢸⡇⠀
+⠀⠀⠈⠓⠢⡔⠋⢹⠋⢀⣉⣮⡏⠛⣶⣤⣄⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣬⠇⠀⣸⠇⠀⠀⣸⠁⠀
+⠀⠀⠀⠀⠀⠁⠀⠘⠶⠞⠉⠋⠀⠸⣯⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠞⢉⣠⡴⠚⠉⠀⠀⣰⠇⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠒⠦⠤⠤⠤⠤⢤⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⡏⠉⠉⠉⠀⠀⠀⠀⣠⡼⠁⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠳⢤⣤⣀⠀⠀⠀⠀⠀⠀⣋⣀⣙⣷⠦⠤⠤⠴⠶⠛⠁⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠲⠶⠖⠚⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+");
+            return;
+        }
+
         public void exit()
         {
             Environment.Exit(0);
         }
-    
-    }
 
+        public bool optionMenu()
+        {
+            Console.Clear();
+
+            Console.Write(@"
+
+       ____  _____ _______ _____ ____  _   _  _____ 
+      / __ \|  __ \__   __|_   _/ __ \| \ | |/ ____|
+     | |  | | |__) | | |    | || |  | |  \| | (___  
+     | |  | |  ___/  | |    | || |  | | . ` |\___ \ 
+     | |__| | |      | |   _| || |__| | |\  |____) |
+      \____/|_|      |_|  |_____\____/|_| \_|_____/ 
+                                                
+                                                
+
+");
+
+            Console.WriteLine("Press Escape to Return");
+
+            var key = Console.ReadKey().Key;
+
+            switch (key)
+            {
+                case ConsoleKey.Escape:
+                    return true;
+                default:
+                    return true;
+            }
+
+        }
+    }
+    
 }

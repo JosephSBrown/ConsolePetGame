@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace PetGame
 {
@@ -8,7 +9,7 @@ namespace PetGame
         {
             App app = new App();
 
-            app.titlemenu();
+            app.Run();
         }
     }
 }
