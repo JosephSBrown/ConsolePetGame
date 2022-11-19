@@ -20,24 +20,6 @@ namespace PetGame
 
         public bool titlemenu()
         {
-            string TitleGraphic = $@"
-                                   ____  __                                 ____       __ 
-                                  / __ \/ /_  ____________  __________     / __ \___  / /_
-                                 / / / / __ \/ ___/ ___/ / / / ___/ _ \   / /_/ / _ \/ __/
-                                / /_/ / /_/ (__  ) /__/ /_/ / /  /  __/  / ____/  __/ /_  
-                                \____/_.___/____/\___/\__,_/_/   \___/  /_/    \___/\__/  
-
-                                     _____ _                 __      __            
-                                    / ___/(_)___ ___  __  __/ /___ _/ /_____  _____
-                                    \__ \/ / __ `__ \/ / / / / __ `/ __/ __ \/ ___/
-                                   ___/ / / / / / / / /_/ / / /_/ / /_/ /_/ / /    
-                                  /____/_/_/ /_/ /_/\__,_/_/\__,_/\__/\____/_/     
-                                                 
-
-
-
-";
-
             //Menu Options
             List<MenuOption> options = new List<MenuOption>()
             {
@@ -49,7 +31,7 @@ namespace PetGame
 
             int index = 0;
 
-            createMenu(options, options[index], TitleGraphic);
+            createMenu(options, options[index]);
 
             ConsoleKeyInfo key;
 
@@ -62,7 +44,7 @@ namespace PetGame
                     if (index - 1 >= 0)
                     {
                         index--;
-                        createMenu(options, options[index], TitleGraphic);
+                        createMenu(options, options[index]);
                     }
                 }
                 else if (key.Key == ConsoleKey.DownArrow)
@@ -70,7 +52,7 @@ namespace PetGame
                     if (index + 1 < options.Count)
                     {
                         index++;
-                        createMenu(options, options[index], TitleGraphic);
+                        createMenu(options, options[index]);
                     }
                 }
                 else if (key.Key == ConsoleKey.Enter)
@@ -84,14 +66,14 @@ namespace PetGame
 
         }
 
-        public static void createMenu(List<MenuOption> options, MenuOption selectedOption, string graphic)
+        public static void createMenu(List<MenuOption> options, MenuOption selectedOption)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.Clear();
 
-            Console.Write(graphic);
+            TextDisplay.titleText();
 
             foreach (MenuOption o in options)
             {
@@ -150,16 +132,7 @@ namespace PetGame
         {
             Console.Clear();
 
-            Console.Write(@"
-
-                                                 ____        __  _                 
-                                                / __ \____  / /_(_)___  ____  _____
-                                               / / / / __ \/ __/ / __ \/ __ \/ ___/
-                                              / /_/ / /_/ / /_/ / /_/ / / / (__  ) 
-                                              \____/ .___/\__/_/\____/_/ /_/____/  
-                                                  /_/                              
-
-    ");
+            TextDisplay.optionText();
 
             Console.WriteLine("Press Escape to Return");
 
