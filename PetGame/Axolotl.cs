@@ -4,8 +4,6 @@ namespace PetGame
 {
     class Axolotl : Pet
     {
-        public string PetType = "Axolotl";
-
         public override void DisplayPet()
         {
             Console.Write($@"

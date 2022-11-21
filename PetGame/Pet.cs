@@ -18,5 +18,11 @@ namespace PetGame
         {
 
         }
+
+        public virtual void standardsound()
+        { 
+        
+        }
+
     }
 }

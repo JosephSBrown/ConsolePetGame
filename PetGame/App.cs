@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Reflection;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PetGame
 {
@@ -18,14 +21,14 @@ namespace PetGame
             titlemenu();
         }
 
-        public bool titlemenu()
+        public static void titlemenu()
         {
             //Menu Options
             List<MenuOption> options = new List<MenuOption>()
             {
                 new MenuOption("New Game", () => newPet()),
                 new MenuOption("Load Game", () => Console.WriteLine("Billy")),
-                new MenuOption("Options", () => optionMenu()),
+                new MenuOption("Options", () => Options.Menu()),
                 new MenuOption("Exit", () => exit()),
             };
 
@@ -62,7 +65,7 @@ namespace PetGame
             }
             while (key.Key != ConsoleKey.Escape);
 
-            return true;
+            return;
 
         }
 
@@ -91,20 +94,80 @@ namespace PetGame
             }
         }
 
+        public static void createPetList(List<Pet> options, Pet selectedOption)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
 
-        public void newPet()
+            Console.Clear();
+
+            TextDisplay.selectPet();
+
+            foreach (Pet o in options)
+            {
+                if (o == selectedOption)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (Get(o.GetType()).Length / 2)) + "}", Get(o.GetType())));
+            }
+        }
+
+
+        public static void newPet()
         {
             Console.Clear();
 
-            string name = infoGet("Insert Your Pet's Name...");
+            List<Pet> pets = GetClassType<Pet>();
+            int index = 0;
 
-            Pet pet = new Axolotl();
-            pet.Name = name;
-            pet.DisplayPet();
+            createPetList(pets, pets[index]);
 
-            Console.WriteLine($"Here is your new pet, {pet.Name} the {pet.Type}");
+            ConsoleKeyInfo key;
 
-            ConsoleKeyInfo key = Console.ReadKey();
+            do
+            {
+                key = Console.ReadKey();
+
+                if (key.Key == ConsoleKey.UpArrow)
+                {
+                    if (index - 1 >= 0)
+                    {
+                        index--;
+                        createPetList(pets, pets[index]);
+                    }
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    if (index + 1 < pets.Count)
+                    {
+                        index++;
+                        createPetList(pets, pets[index]);
+                    }
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+            }
+            while (key.Key != ConsoleKey.Escape);
+
+            Console.Clear();
+
+            TextDisplay.selectPet();
+
+            pets[index].standardsound();
+            pets[index].DisplayPet();
+
+            string naming = "What Would You Like Your Pet to be Called? ";
+            Console.Write(String.Format("{0," + ((Console.WindowWidth / 2) + (naming.Length / 2)) + "}", naming));
+            Console.ReadLine();
 
             switch (key.Key)
             {
@@ -116,8 +179,7 @@ namespace PetGame
             }
         }
 
-
-        public void exit()
+        public static void exit()
         {
             Environment.Exit(0);
         }
@@ -128,40 +190,25 @@ namespace PetGame
             return Console.ReadLine();
         }
 
-        public bool optionMenu()
+        public static List<T> GetClassType<T>() where T : class
         {
-            Console.Clear();
-
-            TextDisplay.optionText();
-
-            Console.WriteLine("Press Escape to Return");
-
-            var key = Console.ReadKey().Key;
-
-            bool space = false;
-
-            switch (key)
+            List<T> types = new List<T>();
+            foreach (Type type in Assembly.GetAssembly(typeof(T)).GetTypes().Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T))))
             {
-                case ConsoleKey.Spacebar:
-                    if (!space)
-                    {
-                        mute = true;
-                        space = true;
-                        Console.Write("ahhhh");
-                    }
-                    else
-                    {
-                        mute = false;
-                        space = true;
-                    }
-                    return true;
-                case ConsoleKey.Escape:
-                    titlemenu();
-                    return true;
-                default:
-                    return true;
+                types.Add((T)Activator.CreateInstance(type));
             }
-
+            return types;
         }
+
+        public static string Get(Type input)
+        {
+            string[] words = input.ToString().Split('.');
+            string lastWord = words[^1];
+            string[] splitWord = Regex.Split(lastWord, @"(?<!^)(?=[A-Z])");
+            string convertedWord = string.Join(" ", splitWord);
+            return convertedWord;
+        }
+
+
     }
 }

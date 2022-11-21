@@ -15,14 +15,10 @@ namespace PetGame
 
             string six   = $@"       _____ _                 __      __                  ";
             string seven = @$"      / ___/(_)___ ___  __  __/ /___ _/ /_____  _____      ";
-            string eight= @$"       \__ \/ / __ `__ \/ / / / / __ `/ __/ __ \/ ___/      ";
+            string eight = @$"      \__ \/ / __ `__ \/ / / / / __ `/ __/ __ \/ ___/      ";
             string nine  = @$"     ___/ / / / / / / / /_/ / / /_/ / /_/ /_/ / /          ";
             string ten   = $@"    /____/_/_/ /_/ /_/\__,_/_/\__,_/\__/\____/_/           ";
                                                  
-
-                                                          
-
-
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (one.Length / 2)) + "}", one));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (two.Length / 2)) + "}", two));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (three.Length / 2)) + "}", three));
@@ -57,8 +53,34 @@ namespace PetGame
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (four.Length / 2)) + "}", four));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (five.Length / 2)) + "}", five));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (six.Length / 2)) + "}", six));
+            Console.Write($@"
+
+
+");
 
 
         }
+
+        public static void selectPet()
+        {
+
+        string one =    $@"   _____      __          __              ____       __  ";
+        string two =    $@"  / ___/___  / /__  _____/ /_   ____ _   / __ \___  / /_ ";
+        string three =  $@"  \__ \/ _ \/ / _ \/ ___/ __/  / __ `/  / /_/ / _ \/ __/ ";
+        string four =   $@" __ / /  __/ /  __/ /__/ /_   / /_/ /  / ____/  __/ /_   ";
+        string five =   $@"/____/\___/_/\___/\___/\__/   \__,_/  /_/    \___/\__/   ";
+
+        Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (one.Length / 2)) + "}", one));
+        Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (two.Length / 2)) + "}", two));
+        Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (three.Length / 2)) + "}", three));
+        Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (four.Length / 2)) + "}", four));
+        Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (five.Length / 2)) + "}", five));
+        Console.Write($@"
+
+
+");
+
+        }
+
     }
 }
