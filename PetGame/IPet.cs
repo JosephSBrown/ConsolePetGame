@@ -5,5 +5,6 @@ namespace PetGame
     internal interface IPet
     {
         void DisplayPet();
+        void standardsound();
     }
 }

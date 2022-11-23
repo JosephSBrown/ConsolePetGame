@@ -13,6 +13,9 @@
     <None Update="cowstandard.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="dolphinstandard.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="kawaiifuturebass.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

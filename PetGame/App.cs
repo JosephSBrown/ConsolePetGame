@@ -10,6 +10,7 @@ namespace PetGame
     class App
     {
         bool mute = false;
+        public static List<Pet> AllPets = new List<Pet>();
 
         public void Run()
         {
@@ -167,7 +168,12 @@ namespace PetGame
 
             string naming = "What Would You Like Your Pet to be Called? ";
             Console.Write(String.Format("{0," + ((Console.WindowWidth / 2) + (naming.Length / 2)) + "}", naming));
-            Console.ReadLine();
+            string name = Console.ReadLine();
+
+            AllPets.Add(pets[index]);
+            AllPets.Last().Name = name;
+
+            loadPet();
 
             switch (key.Key)
             {
@@ -177,6 +183,33 @@ namespace PetGame
                 default:
                     return;
             }
+        }
+
+        public static void loadPet()
+        {
+            Console.Clear();
+
+            int index = 0;
+
+            foreach (Pet o in AllPets)
+            {
+                if (o == AllPets[index])
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.Write(String.Format("{0," + ((Console.WindowWidth / 2) + (o.Name.Length / 2)) + "}", o.Name));
+            }
+            
+            string PetName = $"Pet Name: {AllPets[index].Name}";
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (PetName.Length / 2)) + "}", PetName));
+
+            AllPets[index].DisplayPet();
         }
 
         public static void exit()

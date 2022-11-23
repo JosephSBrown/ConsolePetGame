@@ -33,8 +33,6 @@ namespace PetGame
 
 
 ");
-
-
         }
 
         public static void optionText()
@@ -57,8 +55,6 @@ namespace PetGame
 
 
 ");
-
-
         }
 
         public static void selectPet()
@@ -79,7 +75,6 @@ namespace PetGame
 
 
 ");
-
         }
 
     }

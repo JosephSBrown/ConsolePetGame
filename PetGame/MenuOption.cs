@@ -4,7 +4,6 @@ namespace PetGame
 {
     class MenuOption
     {
-
         public String option { get; set; }
         public Action selected { get; set; }
 
