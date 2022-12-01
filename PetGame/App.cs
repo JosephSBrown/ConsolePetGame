@@ -4,6 +4,7 @@ using System.Threading;
 using System.Reflection;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace PetGame
 {
@@ -189,10 +190,18 @@ namespace PetGame
         {
             Console.Clear();
 
+            Thread Pets = new Thread(PetMenu);
+            Pets.Start();
+        }
+
+        public static void PetMenu()
+        { 
             int index = 0;
 
             foreach (Pet o in AllPets)
             {
+                DataTable petselect = new DataTable();
+                petselect.Columns.Add(o.Name);
                 if (o == AllPets[index])
                 {
                     Console.BackgroundColor = ConsoleColor.White;
@@ -203,13 +212,26 @@ namespace PetGame
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-                Console.Write(String.Format("{0," + ((Console.WindowWidth / 2) + (o.Name.Length / 2)) + "}", o.Name));
             }
-            
-            string PetName = $"Pet Name: {AllPets[index].Name}";
+
+            string topbar = $"< {AllPets[index].Name} : {AllPets[index].Type} >";
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (topbar.Length / 2)) + "}", topbar));
+
+            string PetName = @$"Pet Name: {AllPets[index].Name}
+ 
+";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (PetName.Length / 2)) + "}", PetName));
 
             AllPets[index].DisplayPet();
+
+            Thread Hunger = new Thread(AllPets[index].decreaseHunger);
+            Thread Health = new Thread(AllPets[index].decreaseHealth);
+            Thread Mood = new Thread(AllPets[index].decreaseMood);
+            Health.Start();
+            Hunger.Start();
+            Mood.Start();
+
+            Console.ReadLine();
         }
 
         public static void exit()
