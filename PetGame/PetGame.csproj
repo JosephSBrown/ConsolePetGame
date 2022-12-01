@@ -10,6 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="collectcoin.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="cowstandard.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

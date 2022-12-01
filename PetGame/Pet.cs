@@ -24,7 +24,7 @@ namespace PetGame
             
         }
 
-        public virtual void decreaseHunger()
+        public virtual void increaseHunger()
         {
 
         }

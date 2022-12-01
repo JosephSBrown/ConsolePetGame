@@ -12,6 +12,7 @@ namespace PetGame
     {
         bool mute = false;
         public static List<Pet> AllPets = new List<Pet>();
+        public static object ConsoleLock = new object();
 
         public void Run()
         {
@@ -25,16 +26,15 @@ namespace PetGame
 
         public static void titlemenu()
         {
+            int index = 0;
             //Menu Options
             List<MenuOption> options = new List<MenuOption>()
             {
                 new MenuOption("New Game", () => newPet()),
-                new MenuOption("Load Game", () => Console.WriteLine("Billy")),
+                new MenuOption("Load Game", () => createPetList(AllPets, AllPets[index])),
                 new MenuOption("Options", () => Options.Menu()),
                 new MenuOption("Exit", () => exit()),
             };
-
-            int index = 0;
 
             createMenu(options, options[index]);
 
@@ -190,59 +190,76 @@ namespace PetGame
         {
             Console.Clear();
 
-            Thread Pets = new Thread(PetMenu);
+            ConsoleKeyInfo key;
+
+            int petindex = 0;
+
+            Thread Pets = new Thread(() => PetMenu(petindex));
             Pets.Start();
+            shopMenu();
+                
         }
 
-        public static void PetMenu()
-        { 
-            int index = 0;
+        public static void PetMenu(int index)
+        {
+            Player player = new Player();
 
-            foreach (Pet o in AllPets)
+            lock (ConsoleLock)
             {
-                DataTable petselect = new DataTable();
-                petselect.Columns.Add(o.Name);
-                if (o == AllPets[index])
+                foreach (Pet o in AllPets)
                 {
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    DataTable petselect = new DataTable();
+                    petselect.Columns.Add(o.Name);
+                    if (o == AllPets[index])
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                 }
-                else
-                {
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
+
+                Console.SetCursorPosition(0, 1);
+                string topbar = $"< {AllPets[index].Name} : {AllPets[index].Type} >";
+                Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (topbar.Length / 2)) + "}", topbar));
+
+                Console.SetCursorPosition(0, 2);
+                string PetName = @$"Pet Name: {AllPets[index].Name}";
+                Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (PetName.Length / 2)) + "}", PetName));
+
+                Console.SetCursorPosition(0, 4);
+                AllPets[index].DisplayPet();
+
+                Thread Hunger = new Thread(AllPets[index].increaseHunger);
+                Thread Health = new Thread(AllPets[index].decreaseHealth);
+                Thread Mood = new Thread(AllPets[index].decreaseMood);
+                Thread Coins = new Thread(() => player.getCoins());
+                Health.Start();
+                Hunger.Start();
+                Mood.Start();
+                Coins.Start();
             }
+            
+        }
 
-            string topbar = $"< {AllPets[index].Name} : {AllPets[index].Type} >";
-            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (topbar.Length / 2)) + "}", topbar));
-
-            string PetName = @$"Pet Name: {AllPets[index].Name}
- 
-";
-            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (PetName.Length / 2)) + "}", PetName));
-
-            AllPets[index].DisplayPet();
-
-            Thread Hunger = new Thread(AllPets[index].decreaseHunger);
-            Thread Health = new Thread(AllPets[index].decreaseHealth);
-            Thread Mood = new Thread(AllPets[index].decreaseMood);
-            Health.Start();
-            Hunger.Start();
-            Mood.Start();
-
-            Console.ReadLine();
+        public static void shopMenu()
+        {
+            Console.SetCursorPosition(0, 24);
+            string shop = "shop";
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (shop.Length / 2)) + "}", shop));
+            List < Item > items = GetClassType<Item>();
+            foreach (Item o in items)
+            {
+                Console.WriteLine(o.Name + " : " + o.Type); 
+            }
         }
 
         public static void exit()
         {
             Environment.Exit(0);
-        }
-
-        private string infoGet(string info)
-        {
-            Console.Write(info);
-            return Console.ReadLine();
         }
 
         public static List<T> GetClassType<T>() where T : class

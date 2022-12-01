@@ -46,22 +46,29 @@ namespace PetGame
                 {
                     Console.SetCursorPosition(0, 19);
                     Console.BackgroundColor = ConsoleColor.Black;
-                    Health = Health - 2;
                     Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
                     if (Health >= 70 && Health < 100)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"Health: {Health}"); ;
+                        Health -= 1;
+                        Console.WriteLine($"Health: {Health}");
                     }
                     else if (Health > 40 && Health < 70)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"Health: {Health}");
+                        Health -= 3;
+                    }
+                    else if (Health - 2 < 0)
+                    {
+                        Health = 0;
                         Console.WriteLine($"Health: {Health}");
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"Health: {Health}");
+                        Health -= 5;
                     }
                 }
                 Thread.Sleep(1000);
@@ -70,7 +77,7 @@ namespace PetGame
 
         }
 
-        public override void decreaseHunger()
+        public override void increaseHunger()
         {
             for (; ; )
             {
@@ -78,23 +85,29 @@ namespace PetGame
                 {
                     Console.SetCursorPosition(0, 20);
                     Console.BackgroundColor = ConsoleColor.Black;
-                    Hunger = Hunger - 2;
                     Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
                     if (Hunger >= 70 && Hunger < 100)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"Hunger: {Hunger}"); ;
+                        Health -= 5;
                     }
                     else if (Hunger > 40 && Hunger < 70)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Hunger: {Hunger}");
+                        Health -= 3;
+                    }
+                    else if (Hunger + 2 > 100)
+                    {
+                        Hunger = 100;
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"Hunger: {Hunger}");
                     }
+                    Hunger = Hunger + 2;
                 }
                 Thread.Sleep(1000);
             }
@@ -108,7 +121,6 @@ namespace PetGame
                 {
                     Console.SetCursorPosition(0, 21);
                     Console.BackgroundColor = ConsoleColor.Black;
-                    CurrentMood = CurrentMood - 2;
                     Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
                     if (CurrentMood >= 70 && CurrentMood < 100)
                     {
@@ -120,11 +132,16 @@ namespace PetGame
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Current Mood: {CurrentMood}");
                     }
+                    else if (CurrentMood - 2 < 0)
+                    {
+                        CurrentMood = 0;
+                    }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"Current Mood: {CurrentMood}");
                     }
+                    CurrentMood = CurrentMood - 2;
                 }
                 Thread.Sleep(1000);
             }
