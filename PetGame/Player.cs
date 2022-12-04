@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Media;
+using System.Collections.Generic;
 
 namespace PetGame
 {
@@ -8,6 +9,7 @@ namespace PetGame
     {
         private static object ConsoleLock = new object();
         public int coins { get; set; }
+        public List<Item> Inventory = new List<Item>();
         
 
         public Player()
@@ -17,15 +19,10 @@ namespace PetGame
 
         public virtual void getCoins()
         {
-            Console.BackgroundColor = ConsoleColor.Black;
             for ( ; ; )
             { 
                 lock (ConsoleLock)
                 {
-                    Console.SetCursorPosition(0, 23);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
-                    Console.WriteLine($"Total Coins: {coins}");
                     if (coins % 100 == 0) 
                     {
                         SoundPlayer player = new SoundPlayer("collectcoin.wav");
