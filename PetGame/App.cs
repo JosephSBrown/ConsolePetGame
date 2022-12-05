@@ -18,6 +18,7 @@ namespace PetGame
         static public int shopindex = 0;
         static public int invindex = 0;
         public static List<Item> items = GetClassType<Item>();
+        static bool gamethreads = false;
 
         public void Run()
         {
@@ -199,11 +200,7 @@ namespace PetGame
             Thread Game = new Thread(() => GameMenu(petindex, invindex, shopindex));
             Game.Start();
 
-            ConsoleKeyInfo key;
-
-            do
-            {
-                key = Console.ReadKey();
+            ConsoleKeyInfo key = Console.ReadKey();
 
                 if (key.Key == ConsoleKey.UpArrow)
                 {
@@ -255,14 +252,12 @@ namespace PetGame
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
-                    break;
+                    return;
                 }
                 else if (key.Key == ConsoleKey.Backspace)
                 {
                     titlemenu();
                 }
-            }
-            while (key.Key != ConsoleKey.Escape);
 
         }
 
@@ -273,7 +268,7 @@ namespace PetGame
             { 
                 lock (ConsoleLock)
                 {
-
+                    
                     Console.SetCursorPosition(0, 1);
                     string topbar = $"< {AllPets[index].Name} : {AllPets[index].Type} >";
                     Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (topbar.Length / 2)) + "}", topbar));
@@ -285,31 +280,34 @@ namespace PetGame
                     Console.SetCursorPosition(0, 4);
                     AllPets[index].DisplayPet();
 
+                    if (gamethreads != true)
+                    { 
+                        gamethreads = true;
+                        Thread Hunger = new Thread(AllPets[index].increaseHunger);
+                        Thread Health = new Thread(AllPets[index].decreaseHealth);
+                        Thread Mood = new Thread(AllPets[index].decreaseMood);
+                        Thread Coins = new Thread(() => player.getCoins());
+                        Health.Start();
+                        Hunger.Start();
+                        Mood.Start();
+                        Coins.Start();
+                    }
                     
-                    Thread Hunger = new Thread(AllPets[index].increaseHunger);
-                    Thread Health = new Thread(AllPets[index].decreaseHealth);
-                    Thread Mood = new Thread(AllPets[index].decreaseMood);
-                    Thread Coins = new Thread(() => player.getCoins());
                     Console.SetCursorPosition(0, 18);
                     Console.WriteLine($"Health: {AllPets[index].Health}");
-                    Health.Start();
                     Console.SetCursorPosition(0, 19);
                     Console.WriteLine($"Hunger: {AllPets[index].Hunger}");
-                    Hunger.Start();
                     Console.SetCursorPosition(0, 20);
                     Console.WriteLine($"Mood: {AllPets[index].CurrentMood}");
-                    Mood.Start();
                     Console.SetCursorPosition(0, 22);
                     Console.WriteLine($"Total Coins: {player.coins}");
-                    Coins.Start();
                     Console.SetCursorPosition(0, 23);
                     shopMenu(shopindex);
                     Console.SetCursorPosition(0, 26);
                     displayInventory(invindex);
                 }
                 Thread.Sleep(1000);
-            }
-                
+            }    
             
         }
 
@@ -317,7 +315,7 @@ namespace PetGame
         {
             string shop = "--- SHOP ---";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (shop.Length / 2)) + "}", shop));
-            string shopbar = $"<-     {items[index].Name} : {items[index].Type}    ->";
+            string shopbar = $"<-          {items[index].Name} : {items[index].Type} : Cost: {items[index].Cost}         ->";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (shopbar.Length / 2)) + "}", shopbar));
         }
 
@@ -326,7 +324,7 @@ namespace PetGame
             string inventory = "--- INVENTORY ---";
             List<Item> inv = player.Inventory;
             inv = GetClassType<Item>();
-            string invbar = $"<-     {inv[index].Name} : {inv[index].Type}    ->";
+            string invbar = $"<-          {inv[index].Name} : {inv[index].Type}         ->";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (inventory.Length / 2)) + "}", inventory));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (invbar.Length / 2)) + "}", invbar));
         }

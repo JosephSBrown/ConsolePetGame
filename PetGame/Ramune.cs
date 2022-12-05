@@ -11,6 +11,7 @@ namespace PetGame
             Name = "Ramune Soda";
             Integer = 10;
             Type = "Food";
+            Cost = 15;
         }
 
     }

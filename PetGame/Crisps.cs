@@ -11,6 +11,7 @@ namespace PetGame
             Name = "BBQ Chicken Crisps";
             Integer = 5;
             Type = "Food";
+            Cost = 10;
         }
 
     }
