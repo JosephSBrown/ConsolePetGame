@@ -14,6 +14,9 @@ namespace PetGame
         public static List<Pet> AllPets = new List<Pet>();
         public static object ConsoleLock = new object();
         static Player player = new Player();
+        static Ball b = new Ball();
+        static Medicine m = new Medicine();
+        static Crisps c = new Crisps();
         static public int petindex = 0;
         static public int shopindex = 0;
         static public int invindex = 0;
@@ -181,84 +184,58 @@ namespace PetGame
             AllPets.Last().Name = name;
 
             loadPet();
-
-            switch (key.Key)
-            {
-                case ConsoleKey.Escape:
-                    titlemenu();
-                    return;
-                default:
-                    return;
-            }
         }
 
         public static void loadPet()
         {
             Console.Clear();
 
-            Console.SetCursorPosition(0, 0);
             Thread Game = new Thread(() => GameMenu(petindex, invindex, shopindex));
             Game.Start();
 
-            ConsoleKeyInfo key = Console.ReadKey();
+            ConsoleKeyInfo k = Console.ReadKey();
 
-                if (key.Key == ConsoleKey.UpArrow)
+            if (k.Key == ConsoleKey.UpArrow)
+            {
+                if (petindex - 1 >= 0)
                 {
-                    if (petindex - 1 >= 0)
-                    {
-                        petindex--;
-                        loadPet();
-                    }
+                    petindex--;
+                    loadPet();
                 }
-                else if (key.Key == ConsoleKey.DownArrow)
+            }
+            else if (k.Key == ConsoleKey.DownArrow)
+            {
+                if (petindex + 1 < AllPets.Count)
                 {
-                    if (petindex + 1 < AllPets.Count)
-                    {
-                        petindex++;
-                        loadPet();
-                    }
+                    petindex++;
+                    loadPet();
                 }
-                else if (key.Key == ConsoleKey.A)
-                {
-                    if (invindex - 1 >= 0)
-                    {
-                        invindex--;
-                        loadPet();
-                    }
-                }
-                else if (key.Key == ConsoleKey.D)
-                {
-                    if (invindex + 1 < items.Count)
-                    {
-                        invindex++;
-                        loadPet();
-                    }
-                }
-                else if (key.Key == ConsoleKey.Q)
-                {
-                    if (shopindex - 1 >= 0)
-                    {
-                        shopindex--;
-                        loadPet();
-                    }
-                }
-                else if (key.Key == ConsoleKey.E)
-                {
-                    if (shopindex + 1 < items.Count)
-                    {
-                        shopindex++;
-                        loadPet();
-                    }
-                }
-                else if (key.Key == ConsoleKey.Enter)
-                {
-                    return;
-                }
-                else if (key.Key == ConsoleKey.Backspace)
-                {
-                    titlemenu();
-                }
-
+            }
+            else if (k.Key == ConsoleKey.P)
+            {
+                Console.WriteLine(@$"You Played with {AllPets[petindex].Name} with a {b.Name}");
+                b.invoke(AllPets, petindex);
+                Thread.Sleep(1000);
+                loadPet();
+            }
+            else if (k.Key == ConsoleKey.U)
+            {
+                Console.WriteLine(@$"You Fed {AllPets[petindex].Name} some {c.Name}");
+                c.invoke(AllPets, petindex);
+                Thread.Sleep(2000);
+                loadPet();
+            }
+            else if (k.Key == ConsoleKey.Y)
+            {
+                Console.WriteLine(@$"You Healed with {AllPets[petindex].Name} for {Medicine.Integer}");
+                m.invoke(AllPets, petindex);
+                Thread.Sleep(1000);
+                loadPet();
+            }
+            else
+            {
+                return;
+            }
         }
 
         public static void GameMenu(int index, int invindex, int shopindex)
@@ -283,30 +260,35 @@ namespace PetGame
                     if (gamethreads != true)
                     { 
                         gamethreads = true;
+                        Thread Temp = new Thread(() => Atmosphere.decreasetemperature());
                         Thread Hunger = new Thread(AllPets[index].increaseHunger);
                         Thread Health = new Thread(AllPets[index].decreaseHealth);
                         Thread Mood = new Thread(AllPets[index].decreaseMood);
                         Thread Coins = new Thread(() => player.getCoins());
+                        Temp.Start();
                         Health.Start();
                         Hunger.Start();
                         Mood.Start();
                         Coins.Start();
                     }
-                    
+
+                    Console.SetCursorPosition(0, 17);
+                    Console.WriteLine($"Temperature: {Math.Round(Atmosphere.temperature, 2)}");
                     Console.SetCursorPosition(0, 18);
-                    Console.WriteLine($"Health: {AllPets[index].Health}");
+                    Console.WriteLine($"Health: {AllPets[index].Health}    ");
                     Console.SetCursorPosition(0, 19);
-                    Console.WriteLine($"Hunger: {AllPets[index].Hunger}");
+                    Console.WriteLine($"Hunger: {AllPets[index].Hunger}    ");
                     Console.SetCursorPosition(0, 20);
-                    Console.WriteLine($"Mood: {AllPets[index].CurrentMood}");
+                    Console.WriteLine($"Mood: {AllPets[index].CurrentMood}    ");
                     Console.SetCursorPosition(0, 22);
-                    Console.WriteLine($"Total Coins: {player.coins}");
-                    Console.SetCursorPosition(0, 23);
-                    shopMenu(shopindex);
-                    Console.SetCursorPosition(0, 26);
-                    displayInventory(invindex);
+                    Console.WriteLine($"Total Coins: {player.coins}                               ");
+                    Console.SetCursorPosition(0, 27);
+                    player.Inventory.Add(items[index]);
+                    string Controls = "[Y] Heal Pet       [U] Feed Pet       [P] Play With Pet";
+                    Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (Controls.Length / 2)) + "}", Controls));
+
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }    
             
         }
@@ -315,16 +297,15 @@ namespace PetGame
         {
             string shop = "--- SHOP ---";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (shop.Length / 2)) + "}", shop));
-            string shopbar = $"<-          {items[index].Name} : {items[index].Type} : Cost: {items[index].Cost}         ->";
+            string shopbar = $"                <-          {items[index].Name} : {items[index].Type} : Cost: {items[index].Cost}         ->                ";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (shopbar.Length / 2)) + "}", shopbar));
         }
 
         public static void displayInventory(int index)
         {
             string inventory = "--- INVENTORY ---";
-            List<Item> inv = player.Inventory;
-            inv = GetClassType<Item>();
-            string invbar = $"<-          {inv[index].Name} : {inv[index].Type}         ->";
+            player.Inventory.Add(items[index]);
+            string invbar = $"          <-          {player.Inventory[index].Name} : {player.Inventory[index].Type}         ->          ";
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (inventory.Length / 2)) + "}", inventory));
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (invbar.Length / 2)) + "}", invbar));
         }

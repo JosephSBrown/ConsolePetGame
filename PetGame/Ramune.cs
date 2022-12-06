@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PetGame
 {
-    class Ramune : Food
+    class Ramune : Item
     {
 
         public Ramune()

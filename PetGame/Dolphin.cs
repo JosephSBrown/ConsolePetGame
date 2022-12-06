@@ -112,11 +112,11 @@ namespace PetGame
                 {
                     if (CurrentMood >= 70 && CurrentMood < 100)
                     {
-                        //Console.ForegroundColor = ConsoleColor.Green;
+                        //Console.BackgroundColor = ConsoleColor.Green;
                     }
                     else if (CurrentMood > 40 && CurrentMood < 70)
                     {
-                        //Console.ForegroundColor = ConsoleColor.Yellow;
+                        //Console.BackgroundColor = ConsoleColor.Yellow;
                     }
                     else if (CurrentMood - 2 < 0)
                     {
@@ -124,7 +124,7 @@ namespace PetGame
                     }
                     else
                     {
-                        //Console.ForegroundColor = ConsoleColor.Red;
+                        //Console.BackgroundColor = ConsoleColor.Red;
                     }
                     CurrentMood = CurrentMood - 2;
                 }

@@ -19,6 +19,14 @@ namespace PetGame
 
         public virtual void getCoins()
         {
+            if (coins < 0)
+            {
+                coins = 0;
+            }
+            else 
+            {
+                coins = coins;
+            }
             for ( ; ; )
             { 
                 lock (ConsoleLock)

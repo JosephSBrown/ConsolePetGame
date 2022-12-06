@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace PetGame
 {
-    class Crisps : Food
+    class Crisps : Item
     {
 
         public Crisps()
         {
             Name = "BBQ Chicken Crisps";
-            Integer = 5;
+            Integer = 10;
             Type = "Food";
             Cost = 10;
         }

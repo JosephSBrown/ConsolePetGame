@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PetGame
 {
     internal interface IItem
     {
-        void invoke();
+        void invoke(List<Pet> petlist, int index);
     }
 }
