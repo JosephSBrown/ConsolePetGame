@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 
 namespace PetGame
 {
@@ -13,13 +14,16 @@ namespace PetGame
         public int MaxHunger { get; set; }
         public int MaxMood { get; set; }
         public int CurrentMood { get; set; }
+        public int Bond { get; set; }
+        public int MaxBond { get; set; }
+        public int preferredtemperature { get; set; }
 
         public virtual void DisplayPet()
         {
 
         }
 
-        public virtual void decreaseHealth()
+        public virtual void decreaseHealth(double temperature)
         { 
             
         }
@@ -34,9 +38,21 @@ namespace PetGame
         
         }
 
+        public virtual void bondstats()
+        { 
+            
+        }
+
         public virtual void standardsound()
         { 
         
+        }
+
+        public void deathsound()
+        {
+            SoundPlayer player = new SoundPlayer("gameover.wav");
+            player.Load();
+            player.Play();
         }
 
     }

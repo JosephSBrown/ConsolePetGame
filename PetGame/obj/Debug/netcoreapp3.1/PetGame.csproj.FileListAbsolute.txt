@@ -20,7 +20,8 @@ D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\runtimes\unix\l
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\University Year 2\OOP\PetGame\PetGame\obj\Debug\netcoreapp3.1\PetGame.csproj.CopyComplete
-D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\kawaiifuturebass.wav
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\cowstandard.wav
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\dolphinstandard.wav
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\collectcoin.wav
+D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\gameover.wav
+D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\backgroundmusic.wav

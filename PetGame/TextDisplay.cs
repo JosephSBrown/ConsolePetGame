@@ -77,5 +77,25 @@ namespace PetGame
 ");
         }
 
+        public static void gameOver()
+        {
+
+            string one =   $"     ______                        ____                    ";
+            string two =   $"    / ____/___ _____ ___  ___     / __ |_   _____  _____   ";
+            string three = $"   / / __/ __ `/ __ `__ |/ _ |   / / / / | / / _ |/ ___/   ";
+            string four =  $"  / /_/ / /_/ / / / / / /  __/  / /_/ /| |/ /  __/ /       ";
+            string five =  $"  |____/|__,_/_/ /_/ /_/|___/   |____/ |___/|___/_/        ";
+
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (one.Length / 2)) + "}", one));
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (two.Length / 2)) + "}", two));
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (three.Length / 2)) + "}", three));
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (four.Length / 2)) + "}", four));
+            Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (five.Length / 2)) + "}", five));
+            Console.Write($@"
+
+
+");
+        }
+
     }
 }

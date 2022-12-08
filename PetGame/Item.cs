@@ -15,7 +15,17 @@ namespace PetGame
         {
             if (Type == "Food")
             {
-                petlist[index].Hunger = petlist[index].Hunger - Integer;
+                int moodaffected = Integer / petlist[index].Hunger * petlist[index].CurrentMood;
+                if (moodaffected < 5)
+                {
+                    moodaffected = 5;
+                }
+                else if (moodaffected > Integer)
+                {
+                    moodaffected = Integer;
+                }
+                petlist[index].Hunger = petlist[index].Hunger - moodaffected;
+                Console.WriteLine(moodaffected);
             }
             else if (Type == "Toy")
             {

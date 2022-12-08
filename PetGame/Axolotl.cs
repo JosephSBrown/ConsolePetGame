@@ -10,13 +10,16 @@ namespace PetGame
         private static object ConsoleLock = new object();
         public Axolotl()
         {
-            Type = "Axolotol";
+            Type = "Axolotl";
             MaxHealth = 100;
-            Health = 60;
+            Health = 80;
             MaxMood = 100;
-            CurrentMood = 65;
+            CurrentMood = 20;
             MaxHunger = 100;
             Hunger = 0;
+            Bond = 0;
+            MaxBond = 100;
+            preferredtemperature = 20;
         }
 
         public override void DisplayPet()
@@ -56,13 +59,32 @@ namespace PetGame
             Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (sixteen.Length / 2)) + "}", sixteen));
         }
 
-        public override void decreaseHealth()
+        public override void decreaseHealth(double temperature)
         {
             for (; ; )
             {
                 lock (ConsoleLock)
                 {
-                    if (Health >= 70 && Health < 100)
+                    if (temperature > preferredtemperature + 1)
+                    {
+                        Health -= 2;
+                    }
+                    else if (temperature < preferredtemperature - 1)
+                    {
+                        Health -= 1;
+                    }
+
+                    if (Health == MaxHealth || Health > MaxHealth)
+                    {
+                        Health += 0;
+                        Health -= 0;
+                        Health = 100;
+                    }
+                    else if (Health + 2 > MaxHealth)
+                    {
+                        Health = 100;
+                    }
+                    else if (Health >= 70 && Health < 100)
                     {
                         Health -= 1;
                     }
@@ -70,13 +92,14 @@ namespace PetGame
                     {
                         Health -= 3;
                     }
-                    else if (Health - 2 < 0)
-                    {
-                        Health = 0;
-                    }
-                    else
+                    else if (Health > 1 && Health < 40)
                     {
                         Health -= 5;
+                    }
+                    else if (Health < 0 || Health == 0)
+                    {
+                        Health -= 0;
+                        Health = 0;
                     }
                 }
                 Thread.Sleep(3000);
@@ -91,21 +114,33 @@ namespace PetGame
             {
                 lock (ConsoleLock)
                 {
-                    if (Hunger >= 70 && Hunger < 100)
+                    Hunger += 2;
+                    if (Hunger == MaxHunger || Hunger > MaxHunger)
                     {
-                        Health -= 5;
+                        Hunger += 0;
+                        Hunger -= 0;
+                        Hunger = 100;
                     }
-                    else if (Hunger > 40 && Hunger < 70)
-                    {
-                        Health -= 3;
-                    }
-                    else if (Hunger + 2 > 100)
+                    else if (Hunger + 2 > MaxHunger)
                     {
                         Hunger = 100;
                     }
-                    Hunger = Hunger + 2;
+                    else if (Hunger >= 70 && Hunger < 99)
+                    {
+                        Hunger += 5;
+                    }
+                    else if (Hunger > 40 && Hunger < 70)
+                    {
+                        Hunger += 3;
+                    }
+                    else if (Hunger < 0)
+                    {
+                        Hunger -= 0;
+                        Hunger += 0;
+                        Hunger = 0;
+                    }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
             }
         }
 
@@ -115,25 +150,56 @@ namespace PetGame
             {
                 lock (ConsoleLock)
                 {
-                    if (CurrentMood >= 70 && CurrentMood < 100)
+                    if (CurrentMood == MaxMood || CurrentMood > MaxMood)
                     {
-                        //Console.BackgroundColor = ConsoleColor.Green;
+                        CurrentMood += 0;
+                        CurrentMood -= 0;
+                        CurrentMood = 100;
+                    }
+                    else if (CurrentMood + 2 > MaxMood)
+                    {
+                        CurrentMood = 100;
+                    }
+                    else if (CurrentMood >= 70 && CurrentMood < 99)
+                    {
+                        CurrentMood -= 1;
                     }
                     else if (CurrentMood > 40 && CurrentMood < 70)
                     {
-                        //Console.BackgroundColor = ConsoleColor.Yellow;
+                        CurrentMood -= 2;
                     }
-                    else if (CurrentMood - 2 < 0)
+                    else if (CurrentMood > 1 && CurrentMood < 40)
                     {
+                        CurrentMood -= 3;
+                    }
+                    else if (CurrentMood < 0 || CurrentMood == 0 || CurrentMood - 3 < 0)
+                    {
+                        CurrentMood += 0;
+                        CurrentMood -= 0;
                         CurrentMood = 0;
+                    }
+                }
+                Thread.Sleep(5000);
+            }
+        }
+
+        public override void bondstats()
+        {
+            for (; ; )
+            {
+                lock (ConsoleLock)
+                {
+                    if (Bond > 15)
+                    {
+                        Bond -= 3;
                     }
                     else
                     {
-                        //Console.BackgroundColor = ConsoleColor.Red;
+                        Bond -= 0;
+                        Bond += 0;
                     }
-                    CurrentMood = CurrentMood - 2;
                 }
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
             }
         }
 

@@ -4,25 +4,14 @@ using System.Threading;
 
 namespace PetGame
 {
+    //Class for Environments Temperature
     class Atmosphere
     {
-        static object ConsoleLock = new object();
-        public static double temperature = 19.00;
+        public double temperature { get; set; }
 
-        public static void decreasetemperature()
+        public Atmosphere(double T)
         {
-            for (; ; )
-            {
-                lock (ConsoleLock)
-                {
-                    if (temperature > 18.60)
-                    {
-                        temperature -= 0.01;
-                    }
-                    
-                }
-                Thread.Sleep(1000);
-            }
+            temperature = T;
         }
 
     }

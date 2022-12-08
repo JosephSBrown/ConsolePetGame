@@ -9,7 +9,7 @@ namespace PetGame
         public Crisps()
         {
             Name = "BBQ Chicken Crisps";
-            Integer = 10;
+            Integer = 50;
             Type = "Food";
             Cost = 10;
         }
