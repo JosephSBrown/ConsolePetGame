@@ -22,6 +22,9 @@
     <None Update="dolphinstandard.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="eating.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="gameover.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

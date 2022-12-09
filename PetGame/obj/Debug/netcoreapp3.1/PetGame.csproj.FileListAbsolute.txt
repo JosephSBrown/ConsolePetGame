@@ -25,3 +25,4 @@ D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\dolphinstandard
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\collectcoin.wav
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\gameover.wav
 D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\backgroundmusic.wav
+D:\University Year 2\OOP\PetGame\PetGame\bin\Debug\netcoreapp3.1\eating.wav
